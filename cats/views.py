@@ -20,7 +20,7 @@ class BreedView(LoginRequiredMixin,View) :
     def get(self, request):
         bl = Breed.objects.all();
         ctx = { 'breed_list': bl };
-        return render(request, 'cats/cat_list.html', ctx)
+        return render(request, 'cats/breed_list.html', ctx)
 
 # We use reverse_lazy() because we are in "constructor attribute" code
 # that is run before urls.py is completely loaded
