@@ -25,7 +25,7 @@ SECRET_KEY = '8b6uha!j+m7ixn#%t1n4-)^3@ku3vjbxb=_thvro$-%t_m+#4n'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ '*' ]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [ '*' ]
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'home.apps.HomeConfig',
+    'autos.apps.AutosConfig',
     'hello.apps.HelloConfig',
     'django.contrib.admin',
     'django.contrib.auth',
