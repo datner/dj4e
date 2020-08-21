@@ -1,7 +1,7 @@
 import os
 from django.urls import include, path
 
-import . from views
+from . import views
 
 app_name="autos"
 urlpatterns = [
