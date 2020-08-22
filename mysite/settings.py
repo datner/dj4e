@@ -16,7 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Used for a default title
-APP_NAME = 'DJ4E Samples'   # Add
+APP_NAME = 'ChuckList'   # Add
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -41,40 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # Extensions - installed with pip3 / requirements.txt
-    'django_extensions', 
-    'crispy_forms',  
-    'rest_framework', 
-    'social_django',  
-    'home.apps.HomeConfig',  
-
-    # Sample Applications - don't copy
-    'hello.apps.HelloConfig',
-    'users.apps.UsersConfig',
-    'bookone.apps.BookoneConfig',
-    'bookmany.apps.BookmanyConfig',
-    'tracks.apps.TracksConfig',
-    'views.apps.ViewsConfig',
-    'tmpl.apps.TmplConfig',
-    'gview.apps.GviewConfig',
-    'route.apps.RouteConfig',
-    'session.apps.SessionConfig',
-    'authz.apps.AuthzConfig',
-    'getpost.apps.GetpostConfig',
-    'form.apps.FormConfig',
-    'many.apps.ManyConfig',
-    'myarts.apps.MyartsConfig',
-    'menu.apps.MenuConfig',
-    'forums.apps.ForumsConfig',
-    'crispy.apps.CrispyConfig',
-    'pics.apps.PicsConfig',
-    'rest.apps.RestConfig',
-    'favs.apps.FavsConfig',
-    'favsql.apps.FavsqlConfig',
-    'autos.apps.AutosConfig',
-    'usermodel.apps.UsermodelConfig',
-    'chat.apps.ChatConfig',
-    'util.apps.UtilConfig',
-    'well.apps.WellConfig',
+    'django_extensions',
+    'crispy_forms',
+    'rest_framework',
+    'social_django',
+    'home.apps.HomeConfig',
+    'ads.apps.AdsConfig',
 ]
 
 # When we get to crispy forms :)
@@ -91,7 +63,7 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',   # Add
 ]
 
-ROOT_URLCONF = 'dj4e-samples.urls'
+ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
     {
@@ -112,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'dj4e-samples.wsgi.application'
+WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
 # Database
