@@ -6,21 +6,21 @@ from .models import Ad
 
 # Create your views here.
 
-class AdListView(owner.ListView):
+class AdListView(owner.OwnerListView):
     model = Ad
 
-class AdDetailView(owner.DetailView):
+class AdDetailView(owner.OwnerDetailView):
     model = Ad
 
-class AdCreateView(owner.CreateView):
-    model = Ad
-    fields = ['title', 'price', 'text']
-
-class AdUpdateView(owner.UpdateView):
+class AdCreateView(owner.OwnerCreateView):
     model = Ad
     fields = ['title', 'price', 'text']
 
+class AdUpdateView(owner.OwnerUpdateView):
+    model = Ad
+    fields = ['title', 'price', 'text']
 
-class AdDeleteView(owner.DeleteView):
+
+class AdDeleteView(owner.OwnerDeleteView):
     model = Ad
 
