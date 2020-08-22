@@ -23,6 +23,11 @@ class Region(models.Model):
 class Site(models.Model):
     name = models.CharField(max_length=128)
     year = models.IntegerField(null=True)
+    description = models.CharField(max_length=200)
+    justification = models.CharField(max_length=200, null=True)
+    longitude = models.DecimalField( max_digits=5, decimal_places=2)
+    latitude = models.DecimalField( max_digits=5, decimal_places=2)
+    area_hectares = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)

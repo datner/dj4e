@@ -31,11 +31,16 @@ def run():
         iso, created = Iso.objects.get_or_create(name=row[10])
         site, created = Site.objects.get_or_create(
             name=row[0],
-            year=row[3],
+            description=row[1],
+            justification=row[2],
+            year=int(row[3]),
+            longitude=float(row[4]),
+            latitude=float(row[5]),
             state=state,
             category=cat,
             region=reg,
             iso=iso,
         )
+        if row[6] != '': site.area_hectares = float(row[6])
 
         site.save()
