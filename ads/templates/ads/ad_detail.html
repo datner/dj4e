@@ -1,0 +1,7 @@
+{% extends "base_menu.html" %} {% block content %}
+<h1>{{ ad }}</h1>
+<p>{{ ad.text }}</p>
+<p>price: ${{ ad.price }}</p>
+<p>created: {{ ad.created_at }}</p>
+{% endblock %}
+
