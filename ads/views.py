@@ -21,6 +21,6 @@ class AdUpdateView(owner.OwnerUpdateView):
     fields = ['title', 'price', 'text']
 
 
-class AdDeleteView(owner.OwnerDeleteView):
+class AdDeleteView(owner.DeleteView):
     model = Ad
 
