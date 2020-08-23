@@ -23,8 +23,6 @@ def run():
 
 
     for row in reader:
-        print(row)
-
         cat, created = Category.objects.get_or_create(name=row[7])
         state, created = State.objects.get_or_create(name=row[8])
         reg, created = Region.objects.get_or_create(name=row[9])
