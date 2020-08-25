@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
+from django.db.models import Q
 
 from . import owner
 from .models import Ad, Comment, Fav
@@ -14,7 +15,14 @@ class AdListView(owner.OwnerListView):
     model = Ad
 
     def get(self, request):
-        ad_list = self.model.objects.all()
+        search_string = request.GET.get('search', False)
+        if search_string:
+            query = Q(title__contains=search_string)
+            query.add(Q(text__contains=search_string), Q.OR)
+            ad_list = Ad.objects.filter(query).select_related().order_by('-updated_at')[:10]
+        else:
+            ad_list = self.model.objects.all()
+
         favorites = list()
         if request.user.is_authenticated:
             rows = request.user.favorite_ads.values('id')
