@@ -5,13 +5,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 
 from . import owner
-from .models import Ad, Comment
+from .models import Ad, Comment, Fav
 from .forms import CreateForm, CommentForm
 
 # Create your views here.
 
 class AdListView(owner.OwnerListView):
     model = Ad
+
+    def get(self, request):
+        ad_list = self.model.objects.all()
+        favorites = list()
+        if request.user.is_authenticated:
+            rows = request.user.favorite_ads.values('id')
+            favorites = [row['id'] for row in rows]
+        context = { 'favorites': favorites, 'ad_list': ad_list }
+        return render(request, 'ads/ad_list.html', context)
+
 
 class AdDetailView(owner.OwnerDetailView):
     model = Ad
@@ -21,7 +31,12 @@ class AdDetailView(owner.OwnerDetailView):
         ad = self.model.objects.get(id=pk)
         comments = Comment.objects.filter(ad=ad).order_by('-updated_at')
         comment_form = CommentForm()
-        context = { 'ad' : ad, 'comments': comments, 'comment_form': comment_form }
+        favorites = list()
+
+        if request.user.is_authenticated:
+            rows = request.user.favorite_ads.values('id')
+            favorites = [row['id'] for row in rows]
+        context = { 'ad' : ad, 'comments': comments, 'comment_form': comment_form, 'favorites': favorites }
         return render(request, self.template_name, context)
 
 class AdCreateView(owner.OwnerCreateView):
@@ -103,3 +118,32 @@ class CommentDeleteView(owner.OwnerDeleteView):
         return reverse('ads:ad_detail', args=[ad.id])
 
 
+# csrf exemption in class based views
+# https://stackoverflow.com/questions/16458166/how-to-disable-djangos-csrf-validation
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.db.utils import IntegrityError
+
+@method_decorator(csrf_exempt, name='dispatch')
+class AddFavoriteView(LoginRequiredMixin, View):
+    def post(self, request, pk) :
+        print("Add PK",pk)
+        t = get_object_or_404(Ad, id=pk)
+        fav = Fav(user=request.user, ad=t)
+        try:
+            fav.save()  # In case of duplicate key
+        except IntegrityError as e:
+            pass
+        return HttpResponse()
+
+@method_decorator(csrf_exempt, name='dispatch')
+class DeleteFavoriteView(LoginRequiredMixin, View):
+    def post(self, request, pk) :
+        print("Delete PK",pk)
+        t = get_object_or_404(Ad, id=pk)
+        try:
+            fav = Fav.objects.get(user=request.user, ad=t).delete()
+        except Fav.DoesNotExist as e:
+            pass
+
+        return HttpResponse()
